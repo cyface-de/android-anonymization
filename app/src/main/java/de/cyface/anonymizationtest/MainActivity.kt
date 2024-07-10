@@ -228,15 +228,15 @@ class MainActivity : ComponentActivity() {
         val results = objectDetector.detect(tensorizedImage)
 
         var mutableImage = image.copy(Bitmap.Config.ARGB_8888, true)
-        //results.forEach { detection ->
-            val boundingBoxInOriginalImageSize = results[3].boundingBox.convert(
+        results.forEach { detection ->
+            val boundingBoxInOriginalImageSize = detection.boundingBox.convert(
                 image.height,
                 normalizedHeight,
                 image.width,
                 normalizedWidth
             )
             mutableImage = pixelate(mutableImage,boundingBoxInOriginalImageSize , 10)
-        //}
+        }
         onSuccess(mutableImage.asImageBitmap())
     }
 
