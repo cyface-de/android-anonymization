@@ -6,7 +6,6 @@ import android.graphics.Paint
 import android.graphics.Rect
 import android.util.Log
 import androidx.lifecycle.ViewModel
-import de.cyface.anonymizationtest3.ObjectDetector
 import de.cyface.anonymizationtest3.R
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -24,11 +23,6 @@ class Model(
     val state: StateFlow<State> = _state.asStateFlow()
     private var imageReadyForAnonymization: Bitmap? = null
     private var startTime = Instant.now()
-
-    fun anonymize(image: Bitmap, objectDetector: ObjectDetector) {
-        objectDetector.detect(image)
-
-    }
 
     fun anonymize(image: Bitmap, detector: YoloDetector) {
         startTime = Instant.now()
@@ -84,7 +78,7 @@ class Model(
                 )
             }
             _state.update {
-                it.copy(anonymizedImage = pixelatedBitmap)
+                it.anonymizedImage = pixelatedBitmap
                 val now = Instant.now()
                 it.copy(inferenceTime = now.minusMillis(startTime.toEpochMilli()).toEpochMilli().toString())
             }

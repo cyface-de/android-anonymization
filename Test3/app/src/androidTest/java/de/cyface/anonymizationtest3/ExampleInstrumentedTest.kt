@@ -31,35 +31,6 @@ class ExampleInstrumentedTest {
     }
 
     @Test
-    fun objectDetectionHappyPath() {
-        val context = InstrumentationRegistry.getInstrumentation().targetContext
-        val objectDetector = ObjectDetector(context, "yolov8n_640px_float32.tflite")
-        val latch = CountDownLatch(1)
-
-        val image = context.getDrawable(R.drawable.license_plate)?.toBitmap()
-
-        if(image!=null) {
-            objectDetector.initialize(
-                onSuccess = {
-                    Log.d("TEST", "initialized")
-                    val result = objectDetector.detect(image)
-                    for(index in 0..100) {
-                        Log.d("TEST", "${result.get(index)}")
-                    }
-                    latch.countDown()
-                }, onFailure = {
-                    Log.d("Test", "initializion failed")
-                    fail()
-                    latch.countDown()
-                    1
-                }
-            )
-        }
-        latch.await()
-
-    }
-
-    @Test
     fun yoloObjectDetectionHappyPath() {
         val context = InstrumentationRegistry.getInstrumentation().targetContext
         val detector = YoloDetector(
