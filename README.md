@@ -28,3 +28,8 @@ A second try to integrate the model from the University of Leipzig with an
 Android App.
 This version tries to reach a much cleaner implementation based on the lessons
 learned from Test1 and Test2.
+
+Test3 contains a few anonymization models in its asset folder.
+All those models have been create by University Leipzig and are based on
+YOLO v8.
+All of these models may be used by changing the modelPath in `MainActivity`.

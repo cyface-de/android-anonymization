@@ -18,20 +18,23 @@ import org.tensorflow.lite.support.tensorbuffer.TensorBuffer
 
 /**
  * A class that is capable of using a YoloV8 AI-Model to detect objects in images.
+ * This is based on code from the following
+ * <a href="https://github.com/surendramaran/YOLO/blob/main/YOLOv8-Object-Detector-Android-Tflite/app/src/main/java/com/surendramaran/yolov8tflite/Detector.kt">repository</a>.
  *
  * @author Klemens Muthmann
- * @param context Requires an Android context TODO: Why?
+ * @param context Requires an Android context to load models from the assets.
  * @param modelPath The path to the *.tflite model file, as an asset in the Android assets folder.
  * @param labelPath Provide your labels.txt file as an asset in the Android assets folder, if the
- * metadata not present in the model?
- * @param detectorListener
+ * metadata is not present in the model?
+ * @param detectorListener A listener calling back the caller, if a anonymization was finished.
+ * @constructor Requires a callback called if the detector was not successfully initialized.
  */
 class YoloDetector(
     private val context: Context,
     private val modelPath: String,
     private val labelPath: String?,
     private val detectorListener: DetectorListener,
-    private val message: (String) -> Unit
+    message: (String) -> Unit
 ) {
 
     private var interpreter: Interpreter

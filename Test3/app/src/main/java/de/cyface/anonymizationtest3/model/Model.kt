@@ -12,14 +12,25 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import java.time.Instant
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
-import java.util.Date
 
+/**
+ * This app follows the MVVM pattern.
+ * This class realizes the view model of that pattern.
+ *
+ * @author Klemens Muthmann
+ */
 class Model(
     val imageResource: Int = R.drawable.license_plate,
 ): ViewModel(), YoloDetector.DetectorListener {
+    /**
+     * The current state of the application.
+     * Alays us `_state.update` to set the models values, otherwise the view will not notice updates, and thus fail to redraw.
+     */
     private val _state = MutableStateFlow(State())
+
+    /**
+     * A flow that notifies the view to redraw on update.
+     */
     val state: StateFlow<State> = _state.asStateFlow()
     private var imageReadyForAnonymization: Bitmap? = null
     private var startTime = Instant.now()
@@ -86,6 +97,11 @@ class Model(
     }
 }
 
+/**
+ * The models state, consists of the lastly measured inference time and an anonymized image.
+ *
+ * @author Klemens Muthmann
+ */
 data class State (
     var anonymizedImage: Bitmap? = null,
     var inferenceTime: String = ""
